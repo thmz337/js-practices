@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-let fizzbuzz = (number) => {
-  if (number % 15 === 0) {
+const fizzbuzz = (number) => {
+  if (number % 3 === 0 && number % 5 === 0) {
     console.log("FizzBuzz");
   } else if (number % 3 === 0) {
     console.log("Fizz");
