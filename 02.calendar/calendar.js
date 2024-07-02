@@ -8,35 +8,35 @@ const today = new Date();
 let year = today.getFullYear();
 let month = today.getMonth();
 
-const make_cal_header = (year, month) => {
+const makeCalHeader = (year, month) => {
   return `
       ${month + 1}月 ${year}
 日 月 火 水 木 金 土
 `;
 };
 
-const make_cal_body = (year, month) => {
+const makeCalBody = (year, month) => {
   let content = "";
-  const first_date = new Date(year, month, 1);
-  const last_date = new Date(year, month + 1, 0);
+  const firstDate = new Date(year, month, 1);
+  const lastDate = new Date(year, month + 1, 0);
 
-  for (let date = 1; date <= last_date.getDate(); date++) {
-    let display_date = date.toString();
+  for (let date = 1; date <= lastDate.getDate(); date++) {
+    let displayDate = date.toString();
 
-    if (display_date.length === 1) {
-      display_date = " ".concat(display_date);
+    if (displayDate.length === 1) {
+      displayDate = " ".concat(displayDate);
     }
 
     if (new Date(year, month, date).getDay() === 6) {
-      display_date = display_date.concat(" \n");
+      displayDate = displayDate.concat(" \n");
     } else {
-      display_date = display_date.concat(" ");
+      displayDate = displayDate.concat(" ");
     }
 
-    content = content.concat(display_date);
+    content = content.concat(displayDate);
   }
 
-  content = "   ".repeat(first_date.getDay()).concat(content);
+  content = "   ".repeat(firstDate.getDay()).concat(content);
   return content;
 };
 
@@ -55,5 +55,5 @@ for (const [key, value] of Object.entries(argv)) {
   }
 }
 
-process.stdout.write(make_cal_header(year, month));
-console.log(make_cal_body(year, month));
+process.stdout.write(makeCalHeader(year, month));
+console.log(makeCalBody(year, month));
