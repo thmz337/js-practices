@@ -10,7 +10,7 @@ let month = today.getMonth();
 
 const make_cal_header = (year, month) => {
   return `
-    ${month + 1}月 ${year}
+      ${month + 1}月 ${year}
 日 月 火 水 木 金 土
 `;
 };
