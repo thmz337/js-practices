@@ -9,8 +9,7 @@ let year = today.getFullYear();
 let month = today.getMonth();
 
 const makeCalHeader = (year, month) => {
-  return `
-      ${month + 1}月 ${year}
+  return `      ${month + 1}月 ${year}
 日 月 火 水 木 金 土
 `;
 };
@@ -57,3 +56,4 @@ for (const [key, value] of Object.entries(argv)) {
 
 process.stdout.write(makeCalHeader(year, month));
 console.log(makeCalBody(year, month));
+process.stdout.write("\n");
