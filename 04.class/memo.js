@@ -2,104 +2,88 @@
 
 import readline from "node:readline";
 import minimist from "minimist";
-import { select } from "@inquirer/prompts";
 import sqlite3 from "sqlite3";
+import Prompt from "./prompt.js";
 
 const db = new sqlite3.Database("memo_app");
 const argv = minimist(process.argv.slice(2));
 
-function run(sql, params = []) {
-  return new Promise((resolve, reject) => {
-    db.run(sql, params, function (err) {
-      if (err === null) {
-        resolve(this.lastID);
-      } else {
-        reject(err);
-      }
-    });
-  });
-}
-
-function all(sql, params = []) {
-  return new Promise((resolve, reject) => {
-    db.all(sql, params, (err, row) => {
-      if (err === null) {
-        resolve(row);
-      } else {
-        reject(err);
-      }
-    });
-  });
-}
-
 class Memo {
-  constructor(title, content) {
+  constructor(title, body) {
     this.title = title;
-    this.content = content;
+    this.body = body;
   }
 
-  async save() {
-    await run("INSERT INTO memos(title, content) VALUES($title, $content)", {
+  save() {
+    Memo.run("INSERT INTO memos(title, body) VALUES($title, $body)", {
       $title: this.title,
-      $content: this.content,
+      $body: this.body,
     });
   }
 
   static delete(id) {
-    run("delete from memos where id = ?", id);
+    this.run("DELETE FROM memos WHERE id = ?", id);
   }
 
-  static all(query) {
-    const memos = all(query);
-    return memos;
+  static all(params = []) {
+    return new Promise((resolve, reject) => {
+      db.all("SELECT * FROM memos ORDER BY id desc", params, (err, row) => {
+        if (err === null) {
+          resolve(row);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  static run(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      db.run(sql, params, function (err) {
+        if (err === null) {
+          resolve(this.lastID);
+        } else {
+          reject(err);
+        }
+      });
+    });
   }
 }
 
 async function main() {
-  await run(
-    "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, content TEXT NOT NULL)",
+  await Memo.run(
+    "CREATE TABLE IF NOT EXISTS memos (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, body TEXT NOT NULL)",
   );
 
+  const memos = await Memo.all();
+  const prompt = new Prompt(memos, argv);
+
   if (argv["l"]) {
-    const memos = await Memo.all("SELECT title FROM memos");
     memos.map((value) => console.log(value.title));
     return;
   }
 
   if (argv["r"]) {
-    const memos = await Memo.all("SELECT * FROM memos");
-
-    if (memos.length != 0) {
-      const answer = await select({
-        message: "Choose a memo you want to see:",
-        choices: memos.map((memo) => ({
-          name: memo.title,
-          value: memo.content,
-          description: memo.content,
-        })),
-      });
+    if (memos.length !== 0) {
+      const answer = await prompt.detailsSelect(
+        "Choose a memo you want to see:",
+      );
       console.log(answer);
     }
     return;
   }
 
   if (argv["d"]) {
-    const memos = await Memo.all("SELECT * FROM memos");
-
-    if (memos.length != 0) {
-      const answer = await select({
-        message: "Choose a memo you want to delete:",
-        choices: memos.map((memo) => ({
-          name: memo.title,
-          value: memo.id,
-        })),
-      });
+    if (memos.length !== 0) {
+      const answer = await prompt.deleteSelect(
+        "Choose a memo you want to delete:",
+      );
       await Memo.delete(answer);
     }
     return;
   }
 
-  let lines = [];
+  const lines = [];
 
   const rl = readline.createInterface({
     input: process.stdin,
@@ -110,9 +94,9 @@ async function main() {
     lines.push(line);
   });
 
-  rl.on("close", () => {
+  rl.on("close", async function () {
     const memo = new Memo(lines[0], lines.join("\n"));
-    memo.save();
+    await memo.save();
   });
 }
 
