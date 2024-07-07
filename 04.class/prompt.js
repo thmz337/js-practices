@@ -7,7 +7,7 @@ export default class Prompt {
   }
 
   detailsSelect(message) {
-    select({
+    return select({
       message: message,
       choices: this.contents.map((content) => ({
         name: content.title,
@@ -18,7 +18,7 @@ export default class Prompt {
   }
 
   deleteSelect(message) {
-    select({
+    return select({
       message: message,
       choices: this.contents.map((content) => ({
         name: content.title,
