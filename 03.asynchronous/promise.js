@@ -1,6 +1,6 @@
 import sqlite3 from "sqlite3";
 import timers from "timers/promises";
-import { run, get } from "./wrapper.js";
+import { run, get } from "./node_sqlite3_wrapper.js";
 
 const db = new sqlite3.Database(":memory:");
 
@@ -8,9 +8,7 @@ run(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
-  .then(() => {
-    return run(db, "INSERT INTO books (title) VALUES ('fjord')");
-  })
+  .then(() => run(db, "INSERT INTO books (title) VALUES ('fjord')"))
   .then((id) => {
     console.log(id);
     return get(db, "SELECT * FROM books where id = ?", id);
@@ -28,9 +26,7 @@ run(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
-  .then(() => {
-    return run(db, "INSERT INTO books (title) VALUES (NULL)");
-  })
+  .then(() => run(db, "INSERT INTO books (title) VALUES (NULL)"))
   .then((id) => {
     console.log(id);
     return get(db, "SELECT * FROM books where id = ?", id);
