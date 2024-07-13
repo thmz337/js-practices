@@ -8,9 +8,9 @@ await run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
 
-const id = await run(db, "INSERT INTO books (title) VALUES ('fjord')");
-console.log(id);
-const row = await get(db, "SELECT * FROM books where id = ?", id);
+const book = await run(db, "INSERT INTO books (title) VALUES ('fjord')");
+console.log(book.lastID);
+const row = await get(db, "SELECT * FROM books where id = ?", book.lastID);
 console.log(row);
 await run(db, "DROP TABLE books");
 
@@ -20,8 +20,8 @@ await run(
 );
 
 try {
-  const id = await run(db, "INSERT INTO books (title) VALUES (NULL)");
-  console.log(id);
+  const book = await run(db, "INSERT INTO books (title) VALUES (NULL)");
+  console.log(book.lastID);
 } catch (err) {
   console.error(err.message);
 }

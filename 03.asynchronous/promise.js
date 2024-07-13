@@ -9,9 +9,9 @@ run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
   .then(() => run(db, "INSERT INTO books (title) VALUES ('fjord')"))
-  .then((id) => {
-    console.log(id);
-    return get(db, "SELECT * FROM books where id = ?", id);
+  .then((book) => {
+    console.log(book.lastID);
+    return get(db, "SELECT * FROM books where id = ?", book.lastID);
   })
   .then((row) => {
     console.log(row);
@@ -27,9 +27,9 @@ run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
   .then(() => run(db, "INSERT INTO books (title) VALUES (NULL)"))
-  .then((id) => {
-    console.log(id);
-    return get(db, "SELECT * FROM books where id = ?", id);
+  .then((book) => {
+    console.log(book.lastID);
+    return get(db, "SELECT * FROM books where id = ?", book.lastID);
   })
   .catch((err) => {
     console.error(err.message);

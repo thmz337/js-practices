@@ -2,7 +2,7 @@ export function run(db, sql, params = []) {
   return new Promise((resolve, reject) => {
     db.run(sql, params, function (err) {
       if (err === null) {
-        resolve(this.lastID);
+        resolve(this);
       } else {
         reject(err);
       }
