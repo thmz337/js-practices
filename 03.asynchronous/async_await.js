@@ -35,17 +35,17 @@ async function failMain() {
       const id = await run(db, "INSERT INTO books (title) VALUES (NULL)");
       console.log(id);
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
 
     try {
       const row = await get(db, "SELECT * FROM memos where id = ?", 1);
       console.log(row);
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
   } catch (err) {
-    console.error(err);
+    console.error(err.message);
   } finally {
     await run(db, "DROP TABLE books");
   }

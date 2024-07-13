@@ -29,25 +29,25 @@ db.run(
         if (err === null) {
           console.log(this.lastID);
         } else {
-          console.error(err);
+          console.error(err.message);
         }
 
         db.get("SELECT * FROM memos WHERE id = ?", this.lastID, (err, row) => {
           if (err === null) {
             console.log(row);
           } else {
-            console.error(err);
+            console.error(err.message);
           }
 
           db.run("DROP TABLE books", (err) => {
             if (err !== null) {
-              console.error(err);
+              console.error(err.messsag);
             }
           });
         });
       });
     } else {
-      console.error(err);
+      console.error(err.message);
       return;
     }
   },
