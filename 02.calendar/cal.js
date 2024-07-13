@@ -14,6 +14,7 @@ const makeCalHeader = (year, month) => {
 
 const makeCalBody = (year, month) => {
   let content = "";
+  let saturdayCount = 0;
   const firstDate = new Date(year, month, 1);
   const lastDate = new Date(year, month + 1, 0);
 
@@ -34,6 +35,9 @@ const makeCalBody = (year, month) => {
   }
 
   content = "   ".repeat(firstDate.getDay()).concat(content);
+  if (saturdayCount < 5) {
+    content = `${content}\n`;
+  }
   return content;
 };
 
