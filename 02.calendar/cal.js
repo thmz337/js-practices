@@ -6,6 +6,8 @@ const argv = minimist(process.argv.slice(2));
 const today = new Date();
 let year = today.getFullYear();
 let month = today.getMonth();
+let optionedYear = argv["y"];
+let optionedMonth = argv["m"];
 
 const makeCalHeader = (year, month) => {
   return `      ${month + 1}月 ${year}
@@ -41,19 +43,22 @@ const makeCalBody = (year, month) => {
   return content;
 };
 
-for (const [key, value] of Object.entries(argv)) {
-  if (
-    key === "y" &&
-    typeof value === "number" &&
-    value >= 1970 &&
-    value <= 2100
-  ) {
-    year = value;
-  }
+if (
+  optionedYear &&
+  typeof optionedYear === "number" &&
+  optionedYear >= 1970 &&
+  optionedYear <= 2100
+) {
+  year = optionedYear;
+}
 
-  if (key === "m" && typeof value === "number" && value >= 1 && value <= 12) {
-    month = value - 1;
-  }
+if (
+  optionedMonth &&
+  typeof optionedMonth === "number" &&
+  optionedMonth >= 1 &&
+  optionedMonth <= 12
+) {
+  month = optionedMonth - 1;
 }
 
 console.log(makeCalHeader(year, month));
