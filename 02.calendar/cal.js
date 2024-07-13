@@ -20,14 +20,18 @@ const makeCalBody = (year, month) => {
   const firstDate = new Date(year, month, 1);
   const lastDate = new Date(year, month + 1, 0);
 
-  for (let date = 1; date <= lastDate.getDate(); date++) {
-    let displayDate = date.toString();
+  for (
+    let date = new Date(year, month, 1);
+    date <= lastDate;
+    date.setDate(date.getDate() + 1)
+  ) {
+    let displayDate = date.getDate().toString();
 
     if (displayDate.length === 1) {
       displayDate = ` ${displayDate}`;
     }
 
-    if (new Date(year, month, date).getDay() === 6) {
+    if (date.getDay() === 6) {
       displayDate = `${displayDate} \n`;
       saturdayCount++;
     } else {
