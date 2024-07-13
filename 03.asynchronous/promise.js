@@ -31,6 +31,10 @@ run(
   .then(() => {
     return run(db, "INSERT INTO books (title) VALUES (NULL)");
   })
+  .then((id) => {
+    console.log(id);
+    return get(db, "SELECT * FROM books where id = ?", id);
+  })
   .catch((err) => {
     console.error(err.message);
   })
@@ -38,11 +42,11 @@ run(
     console.log(id);
     return get(db, "SELECT * FROM memos where id = ?", id);
   })
-  .catch((err) => {
-    console.error(err.message);
-  })
   .then((row) => {
     console.log(row);
+  })
+  .catch((err) => {
+    console.error(err.message);
   })
   .finally(() => {
     run(db, "DROP TABLE books");
