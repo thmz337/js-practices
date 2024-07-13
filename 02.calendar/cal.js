@@ -24,19 +24,20 @@ const makeCalBody = (year, month) => {
     let displayDate = date.toString();
 
     if (displayDate.length === 1) {
-      displayDate = " ".concat(displayDate);
+      displayDate = ` ${displayDate}`;
     }
 
     if (new Date(year, month, date).getDay() === 6) {
-      displayDate = displayDate.concat(" \n");
+      displayDate = `${displayDate} \n`;
+      saturdayCount++;
     } else {
-      displayDate = displayDate.concat(" ");
+      displayDate = `${displayDate} `;
     }
 
-    content = content.concat(displayDate);
+    content = `${content}${displayDate}`;
   }
 
-  content = "   ".repeat(firstDate.getDay()).concat(content);
+  content = `${"   ".repeat(firstDate.getDay())}${content}`;
   if (saturdayCount < 5) {
     content = `${content}\n`;
   }
