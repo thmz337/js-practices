@@ -16,7 +16,7 @@ run(
   .then((row) => {
     console.log(row);
   })
-  .finally(() => {
+  .then(() => {
     run(db, "DROP TABLE books");
   });
 
@@ -44,6 +44,6 @@ run(
   .catch((err) => {
     console.error(err.message);
   })
-  .finally(() => {
+  .then(() => {
     run(db, "DROP TABLE books");
   });
