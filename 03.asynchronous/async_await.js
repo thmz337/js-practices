@@ -11,9 +11,9 @@ async function successMain() {
       "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
     );
 
-    const id = await run(db, "INSERT INTO books(title) VALUES('fjord')");
+    const id = await run(db, "INSERT INTO books (title) VALUES ('fjord')");
     console.log(id);
-    const row = await get(db, "SELECT * from books where id = ?", id);
+    const row = await get(db, "SELECT * FROM books where id = ?", id);
     console.log(row);
   } finally {
     await run(db, "DROP TABLE books");
@@ -32,14 +32,14 @@ async function failMain() {
     );
 
     try {
-      const id = await run(db, "INSERT INTO books(title) VALUES(NULL)");
+      const id = await run(db, "INSERT INTO books (title) VALUES (NULL)");
       console.log(id);
     } catch (err) {
       console.error(err);
     }
 
     try {
-      const row = await get(db, "SELECT * from memos where id = ?", 1);
+      const row = await get(db, "SELECT * FROM memos where id = ?", 1);
       console.log(row);
     } catch (err) {
       console.error(err);
