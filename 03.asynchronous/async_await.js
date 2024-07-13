@@ -15,8 +15,6 @@ async function successMain() {
     console.log(id);
     const row = await get(db, "SELECT * from books where id = ?", id);
     console.log(row);
-  } catch (err) {
-    console.error(err);
   } finally {
     await run(db, "DROP TABLE books");
   }

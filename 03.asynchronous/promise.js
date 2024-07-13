@@ -18,9 +18,6 @@ run(
   .then((row) => {
     console.log(row);
   })
-  .catch((err) => {
-    console.error(err);
-  })
   .finally(() => {
     run(db, "DROP TABLE books");
   });
