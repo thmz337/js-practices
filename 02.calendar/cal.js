@@ -13,6 +13,8 @@ const makeCalBody = (year, month) => {
   const firstDate = new Date(year, month, 1);
   const lastDate = new Date(year, month + 1, 0);
 
+  content += "   ".repeat(firstDate.getDay());
+
   for (
     let date = new Date(year, month, 1);
     date <= lastDate;
@@ -25,18 +27,17 @@ const makeCalBody = (year, month) => {
     }
 
     if (date.getDay() === 6) {
-      displayDate = `${displayDate} \n`;
+      displayDate += " \n";
       saturdayCount++;
     } else {
-      displayDate = `${displayDate} `;
+      displayDate += " ";
     }
 
-    content = `${content}${displayDate}`;
+    content += displayDate;
   }
 
-  content = `${"   ".repeat(firstDate.getDay())}${content}`;
   if (saturdayCount < 5) {
-    content = `${content}\n`;
+    content += "\n";
   }
   return content;
 };
