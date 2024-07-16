@@ -26,13 +26,15 @@ const makeCalBody = (year, month) => {
       displayDate = ` ${displayDate}`;
     }
 
+    let delimiter = "";
     if (date.getDay() === 6) {
-      displayDate += " \n";
+      delimiter = "\n";
       saturdayCount++;
     } else {
-      displayDate += " ";
+      delimiter = " ";
     }
 
+    displayDate += delimiter;
     content += displayDate;
   }
 
