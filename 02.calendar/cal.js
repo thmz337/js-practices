@@ -16,7 +16,7 @@ const makeCalBody = (year, month) => {
   content += "   ".repeat(firstDate.getDay());
 
   for (
-    let date = new Date(year, month, 1);
+    let date = new Date(firstDate.getTime());
     date <= lastDate;
     date.setDate(date.getDate() + 1)
   ) {
