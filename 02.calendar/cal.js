@@ -50,7 +50,6 @@ const optionedYear = argv.y;
 const optionedMonth = argv.m;
 
 if (
-  optionedYear &&
   typeof optionedYear === "number" &&
   optionedYear >= 1970 &&
   optionedYear <= 2100
@@ -59,7 +58,6 @@ if (
 }
 
 if (
-  optionedMonth &&
   typeof optionedMonth === "number" &&
   optionedMonth >= 1 &&
   optionedMonth <= 12
