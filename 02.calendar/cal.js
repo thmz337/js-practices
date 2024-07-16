@@ -2,13 +2,6 @@
 
 import minimist from "minimist";
 
-const argv = minimist(process.argv.slice(2));
-const today = new Date();
-let year = today.getFullYear();
-let month = today.getMonth();
-let optionedYear = argv["y"];
-let optionedMonth = argv["m"];
-
 const makeCalHeader = (year, month) => {
   return `      ${month + 1}月 ${year}
 日 月 火 水 木 金 土`;
@@ -47,6 +40,13 @@ const makeCalBody = (year, month) => {
   }
   return content;
 };
+
+const argv = minimist(process.argv.slice(2));
+const today = new Date();
+let year = today.getFullYear();
+let month = today.getMonth();
+const optionedYear = argv.y;
+const optionedMonth = argv.m;
 
 if (
   optionedYear &&
