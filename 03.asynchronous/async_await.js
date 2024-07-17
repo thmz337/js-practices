@@ -9,7 +9,7 @@ await run(
 );
 const book = await run(db, "INSERT INTO books (title) VALUES ('fjord')");
 console.log(book.lastID);
-const row = await get(db, "SELECT * FROM books where id = ?", book.lastID);
+const row = await get(db, "SELECT * FROM books WHERE id = ?", book.lastID);
 console.log(row);
 await run(db, "DROP TABLE books");
 
@@ -25,7 +25,7 @@ try {
 }
 
 try {
-  const row = await get(db, "SELECT * FROM memos where id = ?", 1);
+  const row = await get(db, "SELECT * FROM memos WHERE id = ?", 1);
   console.log(row);
 } catch (err) {
   console.error(err.message);
