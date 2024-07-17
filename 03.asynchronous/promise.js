@@ -11,13 +11,11 @@ run(
   .then(() => run(db, "INSERT INTO books (title) VALUES ('fjord')"))
   .then((book) => {
     console.log(book.lastID);
-    return get(db, "SELECT * FROM books where id = ?", book.lastID);
+    return get(db, "SELECT * FROM books WHERE id = ?", book.lastID);
   })
   .then((row) => {
     console.log(row);
-  })
-  .then(() => {
-    run(db, "DROP TABLE books");
+    return run(db, "DROP TABLE books");
   });
 
 await timers.setTimeout(100);
@@ -29,21 +27,19 @@ run(
   .then(() => run(db, "INSERT INTO books (title) VALUES (NULL)"))
   .then((book) => {
     console.log(book.lastID);
-    return get(db, "SELECT * FROM books where id = ?", book.lastID);
+    return get(db, "SELECT * FROM books WHERE id = ?", book.lastID);
   })
   .catch((err) => {
     console.error(err.message);
   })
   .then((id) => {
     console.log(id);
-    return get(db, "SELECT * FROM memos where id = ?", id);
+    return get(db, "SELECT * FROM memos WHERE id = ?", id);
   })
   .then((row) => {
     console.log(row);
+    return run(db, "DROP TABLE books");
   })
   .catch((err) => {
     console.error(err.message);
-  })
-  .then(() => {
-    run(db, "DROP TABLE books");
   });
