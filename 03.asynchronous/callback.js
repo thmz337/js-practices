@@ -15,7 +15,6 @@ db.run(
         db.run("DROP TABLE books");
       });
     });
-    return;
   },
 );
 
