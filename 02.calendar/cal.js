@@ -26,7 +26,7 @@ const makeCalBody = (year, month) => {
       displayDate = ` ${displayDate}`;
     }
 
-    let delimiter = "";
+    let delimiter;
     if (date.getDay() === 6) {
       delimiter = "\n";
       saturdayCount++;
@@ -34,8 +34,7 @@ const makeCalBody = (year, month) => {
       delimiter = " ";
     }
 
-    displayDate += delimiter;
-    content += displayDate;
+    content += `${displayDate}${delimiter}`;
   }
 
   if (saturdayCount < 5) {
