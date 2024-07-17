@@ -7,7 +7,6 @@ await run(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
-
 const book = await run(db, "INSERT INTO books (title) VALUES ('fjord')");
 console.log(book.lastID);
 const row = await get(db, "SELECT * FROM books where id = ?", book.lastID);
@@ -18,7 +17,6 @@ await run(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
-
 try {
   const book = await run(db, "INSERT INTO books (title) VALUES (NULL)");
   console.log(book.lastID);
