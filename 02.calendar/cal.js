@@ -30,6 +30,8 @@ const makeCalBody = (year, month) => {
     if (date.getDay() === 6) {
       delimiter = "\n";
       saturdayCount++;
+    } else if (date.getDate() === lastDate.getDate()) {
+      delimiter = "";
     } else {
       delimiter = " ";
     }
