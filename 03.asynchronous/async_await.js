@@ -13,21 +13,29 @@ const row = await get(db, "SELECT * FROM books WHERE id = ?", stmt.lastID);
 console.log(row);
 await run(db, "DROP TABLE books");
 
+let wrongStmt;
 await run(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
-const wrongStmt = await run(
-  db,
-  "INSERT INTO books (title) VALUES (NULL)",
-).catch((err) => console.error(err.message));
-if (wrongStmt) {
-  console.log(wrongStmt.lastID);
+try {
+  wrongStmt = await run(db, "INSERT INTO books (title) VALUES (NULL)");
+} catch (error) {
+  if (error.code === "SQLITE_CONSTRAINT") {
+    console.error(error.message);
+  } else {
+    throw error;
+  }
 }
-const wrongRow = await get(db, "SELECT * FROM memos WHERE id = ?", 1).catch(
-  (err) => console.error(err.message),
-);
-if (wrongRow) {
-  console.log(wrongRow);
+try {
+  const id = wrongStmt ? wrongStmt.lastID : undefined;
+  await get(db, "SELECT * FROM memos WHERE id = ?", id);
+} catch (error) {
+  if (error.code === "SQLITE_ERROR") {
+    console.error(error.message);
+  } else {
+    throw error;
+  }
 }
+
 await run(db, "DROP TABLE books");
