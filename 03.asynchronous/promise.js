@@ -27,7 +27,6 @@ run(
   .then(() => run(db, "INSERT INTO books (title) VALUES (NULL)"))
   .then((stmt) => {
     console.log(stmt.lastID);
-    return get(db, "SELECT * FROM books WHERE id = ?", stmt.lastID);
   })
   .catch((err) => {
     console.error(err.message);
