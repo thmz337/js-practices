@@ -44,4 +44,5 @@ run(
   })
   .catch((err) => {
     console.error(err.message);
+    return run(db, "DROP TABLE books");
   });
