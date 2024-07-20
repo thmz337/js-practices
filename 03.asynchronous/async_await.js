@@ -17,7 +17,6 @@ await run(
   db,
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 );
-
 const wrongStmt = await run(
   db,
   "INSERT INTO books (title) VALUES (NULL)",
@@ -25,12 +24,10 @@ const wrongStmt = await run(
 if (wrongStmt) {
   console.log(wrongStmt.lastID);
 }
-
 const wrongRow = await get(db, "SELECT * FROM memos WHERE id = ?", 1).catch(
   (err) => console.error(err.message),
 );
 if (wrongRow) {
   console.log(wrongRow);
 }
-
 await run(db, "DROP TABLE books");
