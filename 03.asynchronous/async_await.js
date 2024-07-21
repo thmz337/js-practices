@@ -28,8 +28,7 @@ try {
   }
 }
 try {
-  const id = wrongStmt ? wrongStmt.lastID : undefined;
-  await get(db, "SELECT * FROM memos WHERE id = ?", id);
+  await get(db, "SELECT * FROM memos WHERE id = ?", wrongStmt?.lastID);
 } catch (error) {
   if (error.code === "SQLITE_ERROR") {
     console.error(error.message);
