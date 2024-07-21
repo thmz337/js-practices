@@ -37,5 +37,4 @@ try {
     throw error;
   }
 }
-
 await run(db, "DROP TABLE books");
