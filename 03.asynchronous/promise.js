@@ -32,9 +32,6 @@ run(
     console.error(err.message);
   })
   .then((id) => {
-    if (id) {
-      console.log(id);
-    }
     return get(db, "SELECT * FROM memos WHERE id = ?", id);
   })
   .then((row) => {
