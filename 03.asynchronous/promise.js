@@ -25,21 +25,17 @@ run(
   "CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL UNIQUE)",
 )
   .then(() => run(db, "INSERT INTO books (title) VALUES (NULL)"))
-  .then((stmt) => {
-    console.log(stmt.lastID);
-  })
   .catch((err) => {
     console.error(err.message);
   })
-  .then((id) => {
-    return get(db, "SELECT * FROM memos WHERE id = ?", id);
+  .then((stmt) => {
+    if (stmt) console.log(stmt.lastID);
+    return get(db, "SELECT * FROM memos WHERE id = ?", stmt?.lastID);
+  })
+  .catch((err) => {
+    console.error(err.message);
   })
   .then((row) => {
-    console.log(row);
+    if (row) console.log(row);
   })
-  .catch((err) => {
-    console.error(err.message);
-  })
-  .then(() => {
-    return run(db, "DROP TABLE books");
-  });
+  .then(() => run(db, "DROP TABLE books"));
