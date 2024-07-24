@@ -21,7 +21,7 @@ await run(
 try {
   wrongStmt = await run(db, "INSERT INTO books (title) VALUES (NULL)");
 } catch (error) {
-  if (error?.code && error.code === "SQLITE_CONSTRAINT") {
+  if (error?.code === "SQLITE_CONSTRAINT") {
     console.error(error.message);
   } else {
     throw error;
@@ -30,7 +30,7 @@ try {
 try {
   await get(db, "SELECT * FROM memos WHERE id = ?", wrongStmt?.lastID);
 } catch (error) {
-  if (error?.code && error.code === "SQLITE_ERROR") {
+  if (error?.code === "SQLITE_ERROR") {
     console.error(error.message);
   } else {
     throw error;
