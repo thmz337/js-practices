@@ -26,7 +26,7 @@ run(
 )
   .then(() => run(db, "INSERT INTO books (title) VALUES (NULL)"))
   .then((stmt) => {
-    if (stmt) console.log(stmt.lastID);
+    console.log(stmt.lastID);
     return stmt;
   })
   .catch((err) => {
@@ -34,7 +34,7 @@ run(
   })
   .then((stmt) => get(db, "SELECT * FROM memos WHERE id = ?", stmt?.lastID))
   .then((row) => {
-    if (row) console.log(row);
+    console.log(row);
   })
   .catch((err) => {
     console.error(err.message);
